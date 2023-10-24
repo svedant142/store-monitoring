@@ -34,7 +34,7 @@ def get_report(report_id: str = Query(..., min_length=1),  db: Session = Depends
             response_content_json = json.dumps({'message':"missing report_id"})
             return Response(status_code=400, content=response_content_json,  media_type='application/json')
         report =  ReportService(ReportRepository()).get_report(db, report_id)
-        if not report.status:
+        if not report:
             response_content_json = json.dumps({'message':"invalid report_id"})
             return Response(status_code=200, content=response_content_json,  media_type='application/json')
         if report.status == constants.RUNNING:
